@@ -1,0 +1,59 @@
+{
+    "description": "一个集成各种小功能的工具。例如自动关闭知乎弹窗，掘金自动跳转外链等",
+    "manifest_version": 3,
+    "name": "t-tools",
+    "version": "1.0.0",
+    "action": {
+        "default_icon": {
+            "19": "assets/icon_19.png",
+            "38": "assets/icon_38.png"
+        },
+        "default_popup": "popup.html",
+        "default_title": "t-tools"
+    },
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "css": [],
+            "js": [
+                "js/chunk-vendors.js",
+                "js/inject.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "permissions": [
+        "contextMenus",
+        "tabs",
+        "notifications",
+        "webRequest",
+        "storage",
+        "declarativeContent",
+        "activeTab"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'",
+        "sandbox": "sandbox allow-scripts; script-src 'self'; object-src 'self'"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "js/inject.js"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ]
+        }
+    ]
+}
