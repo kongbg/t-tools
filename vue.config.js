@@ -53,6 +53,7 @@ module.exports = {
   outputDir: 'dist',
   pages,
   productionSourceMap: false,
+  lintOnSave: false,// 是否开启eslint
   // 配置 content.js background.js
   configureWebpack: {
     devtool: 'cheap-module-source-map',

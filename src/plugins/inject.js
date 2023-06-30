@@ -5,13 +5,13 @@ run();
 // 主函数
 function run() {
     const hostname = getSubdomains(window.location.href);
-    const info = getConfig(hostname);
-    if (info) {
-        const configs = info.configs;
+    const list = getConfig(hostname);
+    list.forEach(item => {
+        const configs = item.configs;
         configs.forEach(config => {
             doAction(config);
         });
-    }
+    })
 }
 
 // 通过hostname获取网站处理配置
@@ -36,9 +36,19 @@ function getConfig(hostname) {
                     domKey: '.Modal-closeButton'
                 }
             ]
+        },
+        {
+            hostname: 'jianshu.com',
+            configs: [
+                {
+                    action: 'redirect',
+                    from: 'url',
+                    paramName: 'url'
+                }
+            ]
         }
     ]
-    return config.find(item=> item.hostname === hostname);
+    return config.filter(item=> item.hostname === hostname);
 }
 
 // 操作
@@ -52,15 +62,15 @@ function doAction (config) {
             const params = getParmas( window.location.search);
             redirectUrl = params.get(config.paramName);
         }
-        // console.log(redirectUrl);
-        window.location.href = redirectUrl;
+        console.log(redirectUrl);
+        if (redirectUrl) window.location.href = redirectUrl;
     }
 
     // 点击页面上的一个元素
     if (action === 'clickDom') {
         let timer = null;
         let num = 0;
-        let max = 100;
+        let max = 80;
         let temp = 0;
         clickDom(config.domKey);
         function clickDom (domKey){
